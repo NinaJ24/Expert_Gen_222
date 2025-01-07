@@ -13,7 +13,7 @@ load_dotenv()
 PINECONE_API_KEY = st.secrets['PINECONE_API_KEY']
 
 pc = Pinecone(api_key=PINECONE_API_KEY)
-assistant = pc.assistant.Assistant(assistant_name="example-assistant2")
+assistant = pc.assistant.Assistant(assistant_name="ce322")
 
 def get_response_content(query):
     # Create a Message object using the input text
@@ -73,10 +73,15 @@ for message in st.session_state.messages:
 #     # st.session_state.messages.append({"role": "assistant", "content": response})
 #     st.session_state.messages.append({"role": "assistant", "content": answer})
 
-if prompt := st.chat_input("Ask your query about civil engineering"):
+if prompt := st.chat_input("Ask your query about life cycle engineering and management of constructed facilities"):
     # Add user message to chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-
+    # st.session_state.messages.append({"role": "user", "content": prompt})
+    # enhanced_prompt = f"{prompt} Provide cited source text if available."
+    enhanced_prompt = f"{prompt} Also provide me the source cited text"
+    
+    # 将增强后的输入加入聊天记录
+    st.session_state.messages.append({"role": "user", "content": enhanced_prompt})
+    
     # Display user message in chat message container
     with st.chat_message("user"):
         st.markdown(prompt)
@@ -87,7 +92,7 @@ if prompt := st.chat_input("Ask your query about civil engineering"):
         thinking_placeholder.markdown("I am thinking...")
 
     # Generate actual response
-    answer = get_response_content(prompt)
+    answer = get_response_content(enhanced_prompt)
 
     # Update the placeholder with the actual response
     thinking_placeholder.markdown(answer)
