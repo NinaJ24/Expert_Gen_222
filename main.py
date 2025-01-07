@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from pinecone_plugins.assistant.models.chat import Message
 from pinecone import Pinecone
 
+pip install langchain_community
 
 load_dotenv()
 
